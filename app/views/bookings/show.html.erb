@@ -5,27 +5,64 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Booking show</title>
 </head>
 
 <body>
+    <div>
+        <h4>Booking Show</h4>
+        <% if flash[:notice] %>
+            <h3 style="color: green">
+            <%= flash[:notice] %>
+            </h3>
+        <% end %>
         <div>
-            <h4>Booking Show</h4>
-            <% if flash[:notice] %>
-                <h3 style="color: green">
-                <%= flash[:notice] %>
-                </h3>
-            <% end %>
             <div>
-                <div>
-                    <label>Array Output design</label>
-                    <p> </p>
-                    <div>
-                    <%= @output.inspect %>
-                    </div>
-                </div>
-            </div>
+                <h3>Array Output design</h3>
+            <div>
+            <br/>            
+            <%= @output.inspect %>
         </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <table style="width:50%;display:table;margin:auto">
+        <% (1..@row_colum[0]).each_with_index do |row, index1| %>
+            <tr>
+            <% (1..@row_colum[1]).each_with_index do |col, index2| %>
+                <td>
+                <% (1..@row_colum[0]).each do |index3| %>
+                    <% if index1 == 0 && index3 == 1%>
+                    <%= @output.flatten[index2] %>
+
+                    <% elsif index1 == index3 %>
+                    <%= @output.flatten[(@row_colum[0] * index1) + (index2 + index1)] %>
+                    <% end %>
+                <% end %>
+                </td>
+            <% end%>
+            </tr>
+        <% end%>
+    </table>
+    <br/>
+    <br/>
+    <br/>
+<h3> Flatten Array: </h3>
+                <%= @output.flatten.inspect %>
+
+    <br/>
+    <br/>
+    <br/>
+
+<h3> Note: </h3>
+<p> The output in array is correct, but in some case the output is wrong in table. </p>
 </body>
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
 
 </html>

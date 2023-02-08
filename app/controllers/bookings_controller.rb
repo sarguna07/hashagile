@@ -6,7 +6,7 @@ class BookingsController < ApplicationController
     if status
       object.output = data
       object.save!
-      redirect_to booking_path(object.id), flash: { notice: msg }
+      redirect_to booking_path(object.identity_id), flash: { notice: msg }
     else
       redirect_to new_booking_path, flash: { error: msg }
     end
@@ -17,8 +17,9 @@ class BookingsController < ApplicationController
   end
 
   def show
-    booking = Booking.find(params[:id])
+    booking = Booking.find_by!(identity_id: params[:id])
     @output = JSON.parse(booking.output)
+    @row_colum = [@output.count, @output.first.flatten.count]
   end
 
   private

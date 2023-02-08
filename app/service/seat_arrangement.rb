@@ -10,14 +10,13 @@ class SeatArrangement
     return [false, error_msg, []] unless error_msg.nil?
 
     set_defaults
-    output = []
 
     [true, 'Array Conditions matched..!', arrange_seats]
   end
 
   private
 
-  attr_reader :input_params, :pass_count, :input_seats, :maximum_cols, :passengers_initial_count, :calculate_total_seats,
+  attr_reader :input_params, :pass_count, :maximum_cols, :passengers_initial_count, :calculate_total_seats,
               :available_seats, :sorted_seats, :aisle_seats, :window_seats, :center_seats
 
   def input_validation
@@ -54,11 +53,11 @@ class SeatArrangement
   end
 
   def make_seats
-    @available_seats = input_params.each_with_object([]).with_index do |(arr, seats), _index|
+    @available_seats = input_params.each_with_object([]).with_index do |(arr, seats), _i|
       seats << (1..arr[1]).map { |_x| Array.new(arr[0]) { 'A' } }
     end
-    @sorted_seats = (1..maximum_cols).each_with_object([]).with_index do |(_x, arr), index|
-      arr << available_seats.map { |x| x[index] }
+    @sorted_seats = (1..maximum_cols).each_with_object([]).with_index do |(_x, arr), i|
+      arr << available_seats.map { |x| x[i] }
     end
   end
 
@@ -120,14 +119,24 @@ class SeatArrangement
   end
 
   def assign_center_seats
+    prev_val = []
+    nil_value_exists = false
+
     @center_seats = window_seats.each_with_object([]) do |ele_arr, res_arr|
       res_arr << if ele_arr.nil?
-                   ""
+                   ''
                  else
-                   ele_arr.each_with_object([]).with_index do |(array1, array2), _i|
+                   ele_arr.each_with_object([]).with_index do |(array1, array2), index|
                      array2 << if array1.nil?
-                                 ""
+                                 nil_value_exists = true
+                                 ct = prev_val[index].count
+                                 qw = []
+                                 (1..ct).map do |_q|
+                                   qw << ''
+                                 end
+                                 qw
                                else
+                                 prev_val = ele_arr unless nil_value_exists
                                  if array1.size > 2
                                    (1..array1.size - 2).each do |x|
                                      add_passengers_initial_count
