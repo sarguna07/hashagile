@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+* checkout to develop branch
 
-* Ruby version
+* Ruby version - 3.1.2
 
-* System dependencies
+* Rails Version - 7.0.4
 
-* Configuration
+* copy .example.env file to .env
 
-* Database creation
+* Set credentials for database(pg) in env
 
-* Database initialization
+* run rails db:create db:migrate
 
-* How to run the test suite
+* run rails s -p 4000
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* to create booking --> http://localhost:4000/bookings/new
