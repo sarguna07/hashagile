@@ -6,22 +6,24 @@ class BookingsController < ApplicationController
     if status
       object.output = data
       object.save!
-
-      render json: {
-        status: true,
-        data: object.output
-      }
+      redirect_to booking_path(object.id), flash: { notice: msg }
     else
-      render json: {
-        status: false,
-        message: msg
-      }
+      redirect_to new_booking_path, flash: { error: msg }
     end
+  end
+
+  def new
+    @booking = Booking.new
+  end
+
+  def show
+    booking = Booking.find(params[:id])
+    @output = JSON.parse(booking.output)
   end
 
   private
 
   def allowed_params
-    params.permit(:input, :count)
+    params.require(:booking).permit(:passengers_count, :input)
   end
 end

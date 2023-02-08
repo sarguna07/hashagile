@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%= form_for(@booking, url: { action: "create" }, html: { class: "form-horizontal" }) do |f| %>
+        <div>
+            <h4>Create Booking</h4>
+            <% if flash[:error] %>
+                <h3 style="color: red">
+                <%= flash[:error] %>
+                </h3>
+            <% end %>
+            <div>
+                    <span>Sample 2D Array = [[1,2] , [2,3] , [4,5]]</span>
+                <div>
+                    <label>Input 2D Array</label>
+                    <div>
+                        <%= f.text_field :input %>
+                    </div>
+                </div>
+                <div>
+                    <label>Passengers Count</label>
+                    <div>
+                        <%= f.number_field :passengers_count %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+          <button type="submit">
+            Save
+          </button>
+        </div>
+      <% end %>
+</body>
+
+</html>
