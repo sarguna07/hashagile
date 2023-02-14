@@ -71,21 +71,14 @@ class SeatArrangement
                                  nil
                                else
 
-                                 if i == 0
-                                   @passengers_initial_count += 1
-                                   array1[-1] = calculate_arr_value
-                                 elsif i == ele_arr.size - 1
-                                   unless array1.size == 1
-                                     @passengers_initial_count += 1
-                                     array1[0] = calculate_arr_value
-                                   end
+                                 case i
+                                 when 0
+                                   array1[-1] = assign_array_value
+                                 when ele_arr.size - 1
+                                   array1[0] = assign_array_value unless array1.size == 1
                                  else
-                                   @passengers_initial_count += 1
-                                   array1[0] = calculate_arr_value
-                                   unless array1.size == 1
-                                     @passengers_initial_count += 1
-                                     array1[-1] = calculate_arr_value
-                                   end
+                                   array1[0] = assign_array_value
+                                   array1[-1] = assign_array_value unless array1.size == 1
                                  end
 
                                  array1
@@ -104,12 +97,11 @@ class SeatArrangement
                      arr2 << if arr1.nil?
                                nil
                              else
-                               if i == 0
-                                 add_passengers_initial_count
-                                 arr1[0] = calculate_arr_value
-                               elsif i == ele_arr.size - 1
-                                 add_passengers_initial_count
-                                 arr1[-1] = calculate_arr_value
+                               case i
+                               when 0
+                                 arr1[0] = assign_array_value
+                               when ele_arr.size - 1
+                                 arr1[-1] = assign_array_value
                                end
                                arr1
                              end
@@ -139,8 +131,7 @@ class SeatArrangement
                                  prev_val = ele_arr unless nil_value_exists
                                  if array1.size > 2
                                    (1..array1.size - 2).each do |x|
-                                     add_passengers_initial_count
-                                     array1[x] = calculate_arr_value
+                                     array1[x] = assign_array_value
                                    end
                                  end
                                  array1
@@ -165,5 +156,10 @@ class SeatArrangement
 
   def add_passengers_initial_count
     @passengers_initial_count += 1
+  end
+
+  def assign_array_value
+    add_passengers_initial_count
+    calculate_arr_value
   end
 end
